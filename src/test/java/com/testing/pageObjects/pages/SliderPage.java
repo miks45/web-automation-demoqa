@@ -12,10 +12,10 @@ import net.thucydides.core.annotations.DefaultUrl;
 @DefaultUrl("/slider")
 public class SliderPage extends WidgetsPage {
   // Locators ----------------------------------------------------------------------------------------------------------
-  public static By SLIDER_TITLE;
+  public static By SLIDER_TITLE = text("Slider");
   // Slider ball/ or sldier itself
-  public static By SLIDER_BALL;
-  public static By SLIDER_VALUE;
+  public static By SLIDER_BALL = css("input[type='range']");
+  public static By SLIDER_VALUE = css("input[id='sliderValue']");
   // Public methods ----------------------------------------------------------------------------------------------------
   public void waitForPageToLoad() {
     getElement(SLIDER_TITLE).waitUntilPresent();
@@ -31,7 +31,21 @@ public class SliderPage extends WidgetsPage {
 
         // TODO: Implement a logic that would move the slider to the left (Keys.LEFT) or right (Keys.RIGHT),
         // based on it's current possition, and the value given in the parameter.
-  
+        sliderValue = Integer.valueOf(getElement(SLIDER_BALL).getValue());
+        if (intOfValue < sliderValue)
+        {
+          for (int i = 0; i < sliderValue - intOfValue; i++)
+          {
+            getElement(elementName).sendKeys(Keys.LEFT);
+          }
+        }
+        else
+        {
+          for (int i = 0; i < intOfValue - sliderValue; i++)
+          {
+            getElement(elementName).sendKeys(Keys.RIGHT);
+          }
+        }
         // sliderValue - current value of slider ball
         sliderValue = Integer.valueOf(getElement(SLIDER_BALL).getValue());
 
